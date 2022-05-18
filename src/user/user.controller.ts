@@ -34,10 +34,7 @@ export class UserController implements Partial<ResourceCrud<User>> {
   }
 }
 
-// TODO: use type decorators and extract fields using a type func
-type UserOutputField = "uuid" | "name" | "email" | "createdAt";
-
 type UserListQuery = {
-  filter?: ResourceFilterMap<User, UserOutputField>;
-  order?: ResourceOrderMap<User, UserOutputField>;
+  filter?: ResourceFilterMap<User>;
+  order?: ResourceOrderMap<User>;
 } & ResourcePagination;

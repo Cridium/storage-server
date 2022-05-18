@@ -5,7 +5,7 @@ import { FieldName, FilterQuery } from "@deepkit/orm";
 import { ResourceCrud } from "./resource-crud.typings";
 import { ResourceFilterMap } from "./resource-filter.typings";
 import { ResourceList, ResourcePagination } from "./resource-listing.typings";
-import { ResourceOrderMap } from "./resource-order.typings";
+import { ResourceOrder, ResourceOrderMap } from "./resource-order.typings";
 
 export class ResourceService<Entity> implements Partial<ResourceCrud<Entity>> {
   constructor() {}
@@ -42,20 +42,23 @@ export class ResourceService<Entity> implements Partial<ResourceCrud<Entity>> {
 
   applyFilterMap(
     query: orm.Query<Entity>,
-    filterMap: ResourceFilterMap<Entity, any>,
+    filterMap: ResourceFilterMap<Entity>,
   ): orm.Query<Entity> {
     Object.entries(filterMap).forEach(([field, condition]) => {
-      query = query.addFilter(field as FieldName<Entity>, condition);
+      query = query.addFilter(
+        field as FieldName<Entity>,
+        condition as FilterQuery<Entity>,
+      );
     });
     return query;
   }
 
   applyOrderMap<Entity>(
     query: orm.Query<Entity>,
-    orderMap: ResourceOrderMap<Entity, any>,
+    orderMap: ResourceOrderMap<Entity>,
   ): orm.Query<Entity> {
     Object.entries(orderMap).forEach(([field, order]) => {
-      query = query.orderBy(field as FieldName<Entity>, order);
+      query = query.orderBy(field as FieldName<Entity>, order as ResourceOrder);
     });
     return query;
   }
