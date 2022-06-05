@@ -6,7 +6,10 @@ services:
       dockerfile: dockerfile.dev
     ports:
       - 8080:8080
+    env_file:
+      - .env
     volumes:
       - data:/app/data/
+      - ./:/app
 volumes:
   data:
