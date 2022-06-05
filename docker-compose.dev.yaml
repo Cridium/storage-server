@@ -12,6 +12,8 @@ services:
     command: npm run dev
     env_file:
       - .env
+    ports:
+      - 8080:8080
   install:
     extends:
       service: base
