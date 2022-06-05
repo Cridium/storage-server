@@ -1,20 +1,13 @@
 version: "3"
 services:
-  base:
+  server:
     build:
       context: .
       dockerfile: dockerfile.dev
     volumes:
       - .:/app
-  start:
-    extends:
-      service: base
     command: npm run dev
     env_file:
       - .env
     ports:
-      - 8080:8080
-  install:
-    extends:
-      service: base
-    command: npm i
+      - "8080:8080"
