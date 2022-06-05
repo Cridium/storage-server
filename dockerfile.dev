@@ -4,3 +4,4 @@ VOLUME ["/app"]
 
 WORKDIR /app
 
+CMD npm run dev
