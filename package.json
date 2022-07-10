@@ -16,7 +16,7 @@
     "test:integration": "jest --config jest.config.integration.js"
   },
   "dependencies": {
-    "@deepkit/app": "^1.0.1-alpha.71",
+    "@deepkit/app": "^1.0.1-alpha.72",
     "@deepkit/core": "^1.0.1-alpha.65",
     "@deepkit/event": "^1.0.1-alpha.71",
     "@deepkit/framework": "^1.0.1-alpha.71",
