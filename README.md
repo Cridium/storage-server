@@ -1,14 +1,14 @@
-# Cridium Server
+# Cridium Storage Server
 
-Backend implementation of [Cridium](https://github.com/Cridium) built with [DeepKit](https://deepkit.io).
+Backend implementation of [Cridium](https://github.com/Cridium) Storage, built with [DeepKit](https://deepkit.io).
 
 WIP: missing features and not ready for deployment.
 
 ## Installation
 
 1. ```sh
-   git clone https://github.com/Cridium/cridium-server.git
-   cd cridium-server
+   git clone https://github.com/Cridium/storage-server.git
+   cd storage-server
    npm install
    cp .env.example .env
    ```
