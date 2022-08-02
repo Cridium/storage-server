@@ -1,4 +1,4 @@
-import { HttpRangeNotSatisfiableError } from "../http-extension/http-common";
+import { HttpRangeNotSatisfiableError } from "src/common/http";
 
 export class HttpRangeParser {
   /**

@@ -8,23 +8,21 @@ import {
 import { Inject } from "@deepkit/injector";
 import { Database, Query } from "@deepkit/orm";
 import { ReflectionProperty } from "@deepkit/type";
+import { NoContentResponse } from "@deepkit-rest/http-extension";
+import { rest } from "@deepkit-rest/rest-core";
+import {
+  ResponseReturnType,
+  RestCrudActionContext,
+  RestCrudKernel,
+  RestRetrievingCustomizations,
+  RestSerializationCustomizations,
+  RestSingleFieldRetriever,
+} from "@deepkit-rest/rest-crud";
 import { AuthGuard } from "src/auth/auth.guard";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
 import { InjectDatabaseSession } from "src/database-extension/database-tokens";
 import { EmailEngine } from "src/email-engine/email-engine.interface";
-import { NoContentResponse } from "src/http-extension/http-common";
-import { rest } from "src/rest/core/rest-decoration";
-import {
-  ResponseReturnType,
-  RestCrudActionContext,
-  RestCrudKernel,
-} from "src/rest/crud/rest-crud";
-import {
-  RestRetrievingCustomizations,
-  RestSingleFieldRetriever,
-} from "src/rest/crud/rest-retrieving";
-import { RestSerializationCustomizations } from "src/rest/crud/rest-serialization";
 
 import { User } from "./user.entity";
 import { UserSelfOnlyGuard } from "./user-self-only.guard";

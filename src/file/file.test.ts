@@ -2,6 +2,9 @@ import { App } from "@deepkit/app";
 import { createTestingApp, TestingFacade } from "@deepkit/framework";
 import { HttpKernel, HttpRequest } from "@deepkit/http";
 import { Database } from "@deepkit/orm";
+import { HttpExtensionModule } from "@deepkit-rest/http-extension";
+import { RestCoreModule } from "@deepkit-rest/rest-core";
+import { RestCrudModule } from "@deepkit-rest/rest-crud";
 import { AuthModule } from "src/auth/auth.module";
 import { AuthTokenService } from "src/auth/auth-token.service";
 import { CoreModule } from "src/core/core.module";
@@ -9,9 +12,7 @@ import { DatabaseExtensionModule } from "src/database-extension/database-extensi
 import { FileEngine } from "src/file-engine/file-engine.interface";
 import { FileEngineModule } from "src/file-engine/file-engine.module";
 import { MemoryFileEngine } from "src/file-engine/implementations/memory";
-import { HttpExtensionModule } from "src/http-extension/http-extension.module";
 import { JwtModule } from "src/jwt/jwt.module";
-import { RestModule } from "src/rest/rest.module";
 import { User } from "src/user/user.entity";
 import { Readable } from "stream";
 
@@ -34,7 +35,8 @@ describe("File", () => {
         new CoreModule(),
         new HttpExtensionModule(),
         new DatabaseExtensionModule(),
-        new RestModule(),
+        new RestCoreModule(),
+        new RestCrudModule(),
         new FileEngineModule({ name: "memory" }),
         new JwtModule({ secret: "secret" }),
         new AuthModule(),

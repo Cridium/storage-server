@@ -7,13 +7,15 @@ import {
   MinLength,
   Unique,
 } from "@deepkit/type";
+import {
+  Filterable,
+  InCreation,
+  InUpdate,
+  Orderable,
+} from "@deepkit-rest/rest-crud";
 import { compare, hash } from "bcryptjs";
 import { AppEntity } from "src/core/entity";
 import { FileSystemRecord } from "src/file/file-system-record.entity";
-import { InCreation } from "src/rest/crud-models/rest-creation-schema";
-import { Filterable } from "src/rest/crud-models/rest-filter-map";
-import { Orderable } from "src/rest/crud-models/rest-order-map";
-import { InUpdate } from "src/rest/crud-models/rest-update-schema";
 
 const HASH_LENGTH = 60;
 

@@ -1,15 +1,13 @@
 import { Database, Query } from "@deepkit/orm";
-import { RestResource } from "src/rest/core/rest-resource";
+import { RestResource } from "@deepkit-rest/rest-core";
 import {
   RestFilteringCustomizations,
   RestGenericFilter,
+  RestGenericSerializer,
   RestGenericSorter,
-} from "src/rest/crud/rest-filtering";
-import {
   RestOffsetLimitPaginator,
   RestPaginationCustomizations,
-} from "src/rest/crud/rest-pagination";
-import { RestGenericSerializer } from "src/rest/crud/rest-serialization";
+} from "@deepkit-rest/rest-crud";
 
 import { AppEntity, isAppEntityType } from "./entity";
 

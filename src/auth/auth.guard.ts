@@ -4,8 +4,8 @@ import {
   HttpUnauthorizedError,
   httpWorkflow,
 } from "@deepkit/http";
+import { RestGuard, RestGuardLauncher } from "@deepkit-rest/rest-core";
 import { RequestContext } from "src/core/request-context";
-import { RestGuard, RestGuardLauncher } from "src/rest/core/rest-guard";
 
 import { AuthTokenService } from "./auth-token.service";
 

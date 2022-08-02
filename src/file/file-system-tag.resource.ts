@@ -1,13 +1,16 @@
 import { http } from "@deepkit/http";
 import { Inject } from "@deepkit/injector";
 import { Database, Query } from "@deepkit/orm";
+import { rest } from "@deepkit-rest/rest-core";
+import {
+  ResponseReturnType,
+  RestCrudKernel,
+  RestSerializationCustomizations,
+} from "@deepkit-rest/rest-crud";
 import { AuthGuard } from "src/auth/auth.guard";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
 import { InjectDatabaseSession } from "src/database-extension/database-tokens";
-import { rest } from "src/rest/core/rest-decoration";
-import { ResponseReturnType, RestCrudKernel } from "src/rest/crud/rest-crud";
-import { RestSerializationCustomizations } from "src/rest/crud/rest-serialization";
 import { User } from "src/user/user.entity";
 
 import { FileSystemTag } from "./file-system-tag.entity";

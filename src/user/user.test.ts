@@ -2,6 +2,9 @@ import { App } from "@deepkit/app";
 import { createTestingApp, TestingFacade } from "@deepkit/framework";
 import { HttpKernel, HttpRequest } from "@deepkit/http";
 import { Database } from "@deepkit/orm";
+import { HttpExtensionModule } from "@deepkit-rest/http-extension";
+import { RestCoreModule } from "@deepkit-rest/rest-core";
+import { RestCrudModule } from "@deepkit-rest/rest-crud";
 import { AuthModule } from "src/auth/auth.module";
 import { AuthTokenService } from "src/auth/auth-token.service";
 import { ExpirableMap } from "src/common/map";
@@ -9,9 +12,7 @@ import { CoreModule } from "src/core/core.module";
 import { RequestContext } from "src/core/request-context";
 import { DatabaseExtensionModule } from "src/database-extension/database-extension.module";
 import { EmailEngine } from "src/email-engine/email-engine.interface";
-import { HttpExtensionModule } from "src/http-extension/http-extension.module";
 import { JwtModule } from "src/jwt/jwt.module";
-import { RestModule } from "src/rest/rest.module";
 
 import { User } from "./user.entity";
 import { UserModule } from "./user.module";
@@ -30,7 +31,8 @@ describe("User", () => {
         new CoreModule(),
         new HttpExtensionModule(),
         new DatabaseExtensionModule(),
-        new RestModule(),
+        new RestCoreModule(),
+        new RestCrudModule(),
         new AuthModule(),
         new JwtModule({ secret: "secret" }),
         new UserModule(),

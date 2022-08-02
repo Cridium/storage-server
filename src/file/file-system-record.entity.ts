@@ -6,14 +6,16 @@ import {
   Positive,
   Reference,
 } from "@deepkit/type";
+import {
+  Filterable,
+  InCreation,
+  InUpdate,
+  Orderable,
+} from "@deepkit-rest/rest-crud";
 import { PartialRequired } from "src/common/utilities";
 import { AppEntity } from "src/core/entity";
 import { FileSystemRecordToTag } from "src/core/entity-pivots";
 import { FileSystemTag } from "src/file/file-system-tag.entity";
-import { InCreation } from "src/rest/crud-models/rest-creation-schema";
-import { Filterable } from "src/rest/crud-models/rest-filter-map";
-import { Orderable } from "src/rest/crud-models/rest-order-map";
-import { InUpdate } from "src/rest/crud-models/rest-update-schema";
 import { User } from "src/user/user.entity";
 
 // prettier-ignore

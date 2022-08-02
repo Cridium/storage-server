@@ -4,13 +4,13 @@ import { createTestingApp, TestingFacade } from "@deepkit/framework";
 import { HttpRequest } from "@deepkit/http";
 import { Database } from "@deepkit/orm";
 import { AutoIncrement, PrimaryKey } from "@deepkit/type";
+import { HttpExtensionModule } from "@deepkit-rest/http-extension";
+import { rest, RestCoreModule } from "@deepkit-rest/rest-core";
+import { RestCrudModule } from "@deepkit-rest/rest-crud";
 import { CoreModule } from "src/core/core.module";
 import { RequestContext } from "src/core/request-context";
 import { DatabaseExtensionModule } from "src/database-extension/database-extension.module";
-import { HttpExtensionModule } from "src/http-extension/http-extension.module";
 import { JwtModule } from "src/jwt/jwt.module";
-import { rest } from "src/rest/core/rest-decoration";
-import { RestModule } from "src/rest/rest.module";
 import { User } from "src/user/user.entity";
 
 import { AuthGuard } from "./auth.guard";
@@ -27,8 +27,9 @@ describe("Auth", () => {
       imports: [
         new CoreModule(),
         new HttpExtensionModule(),
+        new RestCoreModule(),
+        new RestCrudModule(),
         new DatabaseExtensionModule(),
-        new RestModule(),
         new JwtModule({ secret: "secret" }),
         new AuthModule(),
       ],

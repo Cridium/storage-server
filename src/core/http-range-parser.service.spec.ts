@@ -1,4 +1,5 @@
-import { HttpRangeNotSatisfiableError } from "./http-common";
+import { HttpRangeNotSatisfiableError } from "src/common/http";
+
 import { HttpRangeParser } from "./http-range-parser.service";
 
 describe("HttpRangeParser", () => {

@@ -1,11 +1,13 @@
 import { BackReference, entity, Group, Reference } from "@deepkit/type";
+import {
+  Filterable,
+  InCreation,
+  InUpdate,
+  Orderable,
+} from "@deepkit-rest/rest-crud";
 import { AppEntity } from "src/core/entity";
 import { FileSystemRecordToTag } from "src/core/entity-pivots";
 import { FileSystemRecord } from "src/file/file-system-record.entity";
-import { InCreation } from "src/rest/crud-models/rest-creation-schema";
-import { Filterable } from "src/rest/crud-models/rest-filter-map";
-import { Orderable } from "src/rest/crud-models/rest-order-map";
-import { InUpdate } from "src/rest/crud-models/rest-update-schema";
 import { User } from "src/user/user.entity";
 
 type BackRefViaPivot = BackReference<{ via: typeof FileSystemRecordToTag }>;

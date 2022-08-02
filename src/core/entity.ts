@@ -1,7 +1,6 @@
 import { ClassType } from "@deepkit/core";
 import { PrimaryKey, uuid } from "@deepkit/type";
-import { Filterable } from "src/rest/crud-models/rest-filter-map";
-import { Orderable } from "src/rest/crud-models/rest-order-map";
+import { Filterable, Orderable } from "@deepkit-rest/rest-crud";
 
 /**
  * The constructor of all derived classes must have a parameter named `input`

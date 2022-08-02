@@ -9,20 +9,20 @@ import {
 import { Inject } from "@deepkit/injector";
 import { Database, Query } from "@deepkit/orm";
 import { integer, Minimum } from "@deepkit/type";
-import { AuthGuard } from "src/auth/auth.guard";
-import { RequestContext } from "src/core/request-context";
-import { AppEntitySerializer, AppResource } from "src/core/rest";
-import { InjectDatabaseSession } from "src/database-extension/database-tokens";
-import { FileEngine } from "src/file-engine/file-engine.interface";
-import { NoContentResponse } from "src/http-extension/http-common";
-import { HttpRangeParser } from "src/http-extension/http-range-parser.service";
-import { rest } from "src/rest/core/rest-decoration";
+import { NoContentResponse } from "@deepkit-rest/http-extension";
+import { rest } from "@deepkit-rest/rest-core";
 import {
   ResponseReturnType,
   RestCrudActionContext,
   RestCrudKernel,
-} from "src/rest/crud/rest-crud";
-import { RestSerializationCustomizations } from "src/rest/crud/rest-serialization";
+  RestSerializationCustomizations,
+} from "@deepkit-rest/rest-crud";
+import { AuthGuard } from "src/auth/auth.guard";
+import { HttpRangeParser } from "src/core/http-range-parser.service";
+import { RequestContext } from "src/core/request-context";
+import { AppEntitySerializer, AppResource } from "src/core/rest";
+import { InjectDatabaseSession } from "src/database-extension/database-tokens";
+import { FileEngine } from "src/file-engine/file-engine.interface";
 import { User } from "src/user/user.entity";
 
 import { FileChunkUploadManager } from "./file-chunk-upload-manager.service";

@@ -1,7 +1,7 @@
 import { HttpAccessDeniedError } from "@deepkit/http";
+import { HttpRequestParsed } from "@deepkit-rest/http-extension";
+import { RestGuard } from "@deepkit-rest/rest-core";
 import { RequestContext } from "src/core/request-context";
-import { HttpRequestParsed } from "src/http-extension/http-request-parsed.service";
-import { RestGuard } from "src/rest/core/rest-guard";
 
 export class UserSelfOnlyGuard implements RestGuard {
   constructor(
