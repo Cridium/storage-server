@@ -17,7 +17,6 @@ import {
   RestCrudKernel,
   RestSerializationCustomizations,
 } from "@deepkit-rest/rest-crud";
-import { AuthGuard } from "src/auth/auth.guard";
 import { HttpRangeParser } from "src/core/http-range-parser.service";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
@@ -30,7 +29,8 @@ import { FileStreamUtils } from "./file-stream.utils";
 import { FileSystemRecord } from "./file-system-record.entity";
 import { FileSystemRecordBrowser } from "./file-system-record-browser.service";
 
-@rest.resource(FileSystemRecord, "files").guardedBy(AuthGuard)
+@rest.resource(FileSystemRecord, "files")
+@http.group("auth-required")
 export class FileSystemRecordResource
   extends AppResource<FileSystemRecord>
   implements RestSerializationCustomizations<FileSystemRecord>

@@ -1,14 +1,10 @@
-import { eventDispatcher } from "@deepkit/event";
-import {
-  HttpRequest,
-  HttpUnauthorizedError,
-  httpWorkflow,
-} from "@deepkit/http";
-import { RestGuard, RestGuardLauncher } from "@deepkit-rest/rest-core";
+import { HttpRequest, HttpUnauthorizedError } from "@deepkit/http";
+import { rest, RestGuard } from "@deepkit-rest/rest-core";
 import { RequestContext } from "src/core/request-context";
 
 import { AuthTokenService } from "./auth-token.service";
 
+@rest.guard("auth-required")
 export class AuthGuard implements RestGuard {
   constructor(
     private request: HttpRequest,
@@ -28,23 +24,5 @@ export class AuthGuard implements RestGuard {
     if (payload?.type !== "access") throw new HttpUnauthorizedError();
 
     this.requestContext.user = payload.user;
-  }
-}
-
-export class AuthGuardListener {
-  constructor(private guardLauncher: RestGuardLauncher) {}
-
-  @eventDispatcher.listen(httpWorkflow.onController)
-  async beforeController(
-    event: typeof httpWorkflow.onController.event,
-  ): Promise<void> {
-    if (event.route.groups.includes("auth-required")) {
-      const response = await this.guardLauncher.launch(
-        [AuthGuard],
-        event.injectorContext,
-        event.route.action.module,
-      );
-      if (response) event.send(response);
-    }
   }
 }

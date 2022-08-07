@@ -1,7 +1,7 @@
 import { App } from "@deepkit/app";
 import { ClassType } from "@deepkit/core";
 import { createTestingApp, TestingFacade } from "@deepkit/framework";
-import { HttpRequest } from "@deepkit/http";
+import { http, HttpRequest } from "@deepkit/http";
 import { Database } from "@deepkit/orm";
 import { AutoIncrement, PrimaryKey } from "@deepkit/type";
 import { HttpExtensionModule } from "@deepkit-rest/http-extension";
@@ -13,7 +13,6 @@ import { DatabaseExtensionModule } from "src/database-extension/database-extensi
 import { JwtModule } from "src/jwt/jwt.module";
 import { User } from "src/user/user.entity";
 
-import { AuthGuard } from "./auth.guard";
 import { AuthModule } from "./auth.module";
 import { AuthCaptchaService } from "./auth-captcha.service";
 import { AuthTokenService } from "./auth-token.service";
@@ -49,7 +48,8 @@ describe("Auth", () => {
     @rest.resource(MyEntity, "api")
     class MyResource {
       constructor(private context: RequestContext) {}
-      @rest.action("GET").guardedBy(AuthGuard)
+      @rest.action("GET")
+      @http.group("auth-required")
       action() {
         expect(this.context.user).toMatchObject({ id: user.id });
       }

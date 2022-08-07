@@ -7,7 +7,6 @@ import {
   RestCrudKernel,
   RestSerializationCustomizations,
 } from "@deepkit-rest/rest-crud";
-import { AuthGuard } from "src/auth/auth.guard";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
 import { InjectDatabaseSession } from "src/database-extension/database-tokens";
@@ -15,7 +14,8 @@ import { User } from "src/user/user.entity";
 
 import { FileSystemTag } from "./file-system-tag.entity";
 
-@rest.resource(FileSystemTag, "tags").guardedBy(AuthGuard)
+@rest.resource(FileSystemTag, "tags")
+@http.group("auth-required")
 export class FileSystemTagResource
   extends AppResource<FileSystemTag>
   implements RestSerializationCustomizations<FileSystemTag>

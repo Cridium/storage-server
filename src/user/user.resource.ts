@@ -18,17 +18,16 @@ import {
   RestSerializationCustomizations,
   RestSingleFieldRetriever,
 } from "@deepkit-rest/rest-crud";
-import { AuthGuard } from "src/auth/auth.guard";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
 import { InjectDatabaseSession } from "src/database-extension/database-tokens";
 import { EmailEngine } from "src/email-engine/email-engine.interface";
 
 import { User } from "./user.entity";
-import { UserSelfOnlyGuard } from "./user-self-only.guard";
 import { UserVerificationCodePool } from "./user-verification-code";
 
-@rest.resource(User).guardedBy(AuthGuard)
+@rest.resource(User)
+@http.group("auth-required")
 export class UserResource
   extends AppResource<User>
   implements
@@ -66,13 +65,15 @@ export class UserResource
     return this.crud.retrieve();
   }
 
-  @rest.action("PATCH", ":pk").guardedBy(UserSelfOnlyGuard)
+  @rest.action("PATCH", ":pk")
+  @http.group("self-only")
   @http.serialization({ groupsExclude: ["internal"] })
   async update(): Promise<ResponseReturnType> {
     return this.crud.update();
   }
 
-  @rest.action("PUT", ":pk/verification").guardedBy(UserSelfOnlyGuard)
+  @rest.action("PUT", ":pk/verification")
+  @http.group("self-only")
   @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Verification requested")
@@ -95,7 +96,7 @@ export class UserResource
   }
 
   @rest.action("GET", ":pk/verification")
-  @rest.guardedBy(UserSelfOnlyGuard)
+  @http.group("self-only")
   @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Pending verification exists")
@@ -107,7 +108,7 @@ export class UserResource
   }
 
   @rest.action("PUT", ":pk/verification/confirmation")
-  @rest.guardedBy(UserSelfOnlyGuard)
+  @http.group("self-only")
   @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Verified")
