@@ -16,9 +16,9 @@
     "test:integration": "jest --config jest.config.integration.js"
   },
   "dependencies": {
-    "@deepkit-rest/http-extension": "^0.1.2",
-    "@deepkit-rest/rest-core": "^0.1.2",
-    "@deepkit-rest/rest-crud": "^0.1.2",
+    "@deepkit-rest/http-extension": "^0.2.0",
+    "@deepkit-rest/rest-core": "^0.2.0",
+    "@deepkit-rest/rest-crud": "^0.2.0",
     "@deepkit/app": "^1.0.1-alpha.71",
     "@deepkit/core": "^1.0.1-alpha.65",
     "@deepkit/event": "^1.0.1-alpha.71",
