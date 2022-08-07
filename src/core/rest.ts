@@ -32,6 +32,8 @@ export abstract class AppResource<Entity extends AppEntity<Entity>>
 export abstract class AppEntitySerializer<
   Entity extends AppEntity<Entity>,
 > extends RestGenericSerializer<Entity> {
+  override serializationOptions = { groupsExclude: ["internal"] };
+
   protected override createEntity(data: Partial<Entity>): Entity {
     const entityType = this.context.getEntitySchema().getClassType();
     if (!isAppEntityType(entityType)) throw new Error("Invalid entity class");

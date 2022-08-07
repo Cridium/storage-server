@@ -54,27 +54,23 @@ export class UserResource
   }
 
   @rest.action("GET")
-  @http.serialization({ groupsExclude: ["internal"] })
   async list(): Promise<ResponseReturnType> {
     return this.crud.list();
   }
 
   @rest.action("GET", ":pk")
-  @http.serialization({ groupsExclude: ["internal"] })
   async retrieve(): Promise<ResponseReturnType> {
     return this.crud.retrieve();
   }
 
   @rest.action("PATCH", ":pk")
   @http.group("self-only")
-  @http.serialization({ groupsExclude: ["internal"] })
   async update(): Promise<ResponseReturnType> {
     return this.crud.update();
   }
 
   @rest.action("PUT", ":pk/verification")
   @http.group("self-only")
-  @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Verification requested")
     .response(403, "Duplicate verification request")
@@ -97,7 +93,6 @@ export class UserResource
 
   @rest.action("GET", ":pk/verification")
   @http.group("self-only")
-  @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Pending verification exists")
     .response(404, "No pending verification")
@@ -109,7 +104,6 @@ export class UserResource
 
   @rest.action("PUT", ":pk/verification/confirmation")
   @http.group("self-only")
-  @http.serialization({ groupsExclude: ["internal"] })
   @http
     .response(204, "Verified")
     .response(400, "Code not match")

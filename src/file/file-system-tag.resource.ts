@@ -37,31 +37,26 @@ export class FileSystemTagResource
   }
 
   @rest.action("GET")
-  @http.serialization({ groupsExclude: ["internal"] })
   async list(): Promise<ResponseReturnType> {
     return this.crud.list();
   }
 
   @rest.action("POST")
-  @http.serialization({ groupsExclude: ["internal"] })
   async create(): Promise<ResponseReturnType> {
     return this.crud.create();
   }
 
   @rest.action("GET", ":pk")
-  @http.serialization({ groupsExclude: ["internal"] })
   async retrieve(): Promise<ResponseReturnType> {
     return this.crud.retrieve();
   }
 
   @rest.action("PATCH", ":pk")
-  @http.serialization({ groupsExclude: ["internal"] })
   async update(): Promise<ResponseReturnType> {
     return this.crud.update();
   }
 
   @rest.action("DELETE", ":pk")
-  @http.serialization({ groupsExclude: ["internal"] })
   async delete(): Promise<ResponseReturnType> {
     return this.crud.delete();
   }
