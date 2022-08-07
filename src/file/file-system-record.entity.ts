@@ -36,12 +36,12 @@ export class FileSystemRecord extends AppEntity<FileSystemRecord> {
     this.assign(input)
   }
 
-  isContentDefined(): this is FileRecordContentDefined {
+  isContentDefined(): this is FileSystemRecordContentDefined {
     return !!this.contentKey && !!this.contentIntegrity && !!this.contentSize;
   }
 }
 
-export interface FileRecordContentDefined
+export interface FileSystemRecordContentDefined
   extends PartialRequired<
     FileSystemRecord,
     "contentKey" | "contentIntegrity" | "contentSize"

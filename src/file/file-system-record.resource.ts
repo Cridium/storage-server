@@ -26,7 +26,10 @@ import { User } from "src/user/user.entity";
 
 import { FileChunkUploadManager } from "./file-chunk-upload-manager.service";
 import { FileStreamUtils } from "./file-stream.utils";
-import { FileSystemRecord } from "./file-system-record.entity";
+import {
+  FileSystemRecord,
+  FileSystemRecordContentDefined,
+} from "./file-system-record.entity";
 import { FileSystemRecordBrowser } from "./file-system-record-browser.service";
 
 @rest.resource(FileSystemRecord, "files")
@@ -108,13 +111,13 @@ export class FileSystemRecordResource
   }
 
   @rest.action("GET", ":pk/content")
+  @http.group("file-only", "content-defined-only")
   async download(
     response: HttpResponse,
     request: HttpRequest,
   ): Promise<HttpResponse> {
-    const record = await this.crudContext.getEntity();
-    if (record.type !== "file") throw new HttpBadRequestError();
-    if (!record.isContentDefined()) throw new HttpNotFoundError();
+    const record =
+      (await this.crudContext.getEntity()) as FileSystemRecordContentDefined;
 
     if (!request.headers["range"]) {
       const stream = await this.engine.fetch(record.contentKey);
@@ -131,19 +134,19 @@ export class FileSystemRecordResource
   }
 
   @rest.action("GET", ":pk/content/chunks")
+  @http.group("file-only")
   async listChunks(): Promise<number[]> {
     const record = await this.crudContext.getEntity();
-    if (record.type !== "file") throw new HttpBadRequestError();
     return this.chunkUploadManager.inspect(record.id);
   }
 
   @rest.action("PUT", ":pk/content/chunks/:index")
+  @http.group("file-only")
   async uploadChunk(
     request: HttpRequest,
     index: (integer & Minimum<1>) | "last",
   ): Promise<NoContentResponse> {
     const record = await this.crudContext.getEntity();
-    if (record.type !== "file") throw new HttpBadRequestError();
     const order = index === "last" ? undefined : index;
     await this.chunkUploadManager.store(record.id, request, order);
     if (index === "last") {
@@ -159,22 +162,18 @@ export class FileSystemRecordResource
   }
 
   @rest.action("DELETE", ":pk/content/chunks")
+  @http.group("file-only")
   async clearChunks(): Promise<NoContentResponse> {
     const record = await this.crudContext.getEntity();
-    if (record.type !== "file") throw new HttpBadRequestError();
     await this.chunkUploadManager.clear(record.id);
     return new NoContentResponse();
   }
 
   @rest.action("GET", ":pk/integrity")
-  @http
-    .response(204, "File integrity verified")
-    .response(404, "File broken or not uploaded")
-    .response(400, "Invalid record type")
+  @http.group("file-only", "content-defined-only")
   async verify(): Promise<NoContentResponse> {
-    const record = await this.crudContext.getEntity();
-    if (record.type !== "file") throw new HttpBadRequestError();
-    if (!record.isContentDefined()) throw new HttpNotFoundError();
+    const record =
+      (await this.crudContext.getEntity()) as FileSystemRecordContentDefined;
     const stream = await this.engine.fetch(record.contentKey);
     const integrity = await FileStreamUtils.hash(stream);
     if (integrity !== record.contentIntegrity) throw new HttpNotFoundError();
