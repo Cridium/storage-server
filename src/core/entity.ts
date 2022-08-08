@@ -1,10 +1,10 @@
 import { ClassType } from "@deepkit/core";
-import { PrimaryKey, uuid } from "@deepkit/type";
+import { PrimaryKey, UUID, uuid } from "@deepkit/type";
 import { Filterable, Orderable } from "@deepkit-rest/rest-crud";
 
 /**
- * The constructor of all derived classes must have a parameter named `input`
- * with proper type to initialize properties.
+ * The constructor of all derived classes must have a parameter
+ * with proper type for entity initialization.
  * @example
  *  class MyEntity extends AppEntity {
  *    name!: string;
@@ -15,7 +15,7 @@ import { Filterable, Orderable } from "@deepkit-rest/rest-crud";
  *  }
  */
 export abstract class AppEntity<Derived extends AppEntity<Derived>> {
-  id: string & PrimaryKey & Filterable & Orderable = uuid(); // temporary workaround: use `string` instead of `UUID` because of UUID will sometimes fail queries https://github.com/deepkit/deepkit-framework/issues/253
+  id: UUID & PrimaryKey & Filterable & Orderable = uuid();
   createdAt: Date & Filterable & Orderable = new Date();
   assign(input: Partial<Derived>): this {
     Object.assign(this, input);

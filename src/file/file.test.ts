@@ -2,6 +2,7 @@ import { App } from "@deepkit/app";
 import { createTestingApp, TestingFacade } from "@deepkit/framework";
 import { HttpKernel, HttpRequest } from "@deepkit/http";
 import { Database } from "@deepkit/orm";
+import { uuid } from "@deepkit/type";
 import { HttpExtensionModule } from "@deepkit-rest/http-extension";
 import { RestCoreModule } from "@deepkit-rest/rest-core";
 import { RestCrudModule } from "@deepkit-rest/rest-crud";
@@ -158,7 +159,7 @@ describe("File", () => {
         new FileSystemRecord({ owner: user, name: "test1.txt", type: "file" }),
       );
       const response = await requester.request(
-        HttpRequest.GET("/files?filter[id][$eq]=notfound") //
+        HttpRequest.GET(`/files?filter[id][$eq]=${uuid()}`) //
           .header("authorization", auth),
       );
       expect(response.json).toEqual({ total: 0, items: [] });
