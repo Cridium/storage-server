@@ -25,7 +25,7 @@
     "@deepkit/framework": "^1.0.1-alpha.71",
     "@deepkit/http": "^1.0.1-alpha.71",
     "@deepkit/injector": "^1.0.1-alpha.71",
-    "@deepkit/logger": "^1.0.1-alpha.65",
+    "@deepkit/logger": "^1.0.1-alpha.75",
     "@deepkit/orm": "^1.0.1-alpha.71",
     "@deepkit/sqlite": "^1.0.1-alpha.71",
     "@deepkit/type": "^1.0.1-alpha.71",
