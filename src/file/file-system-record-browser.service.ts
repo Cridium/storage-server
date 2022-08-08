@@ -20,4 +20,12 @@ export class FileSystemRecordBrowser {
     }
     return record ?? null;
   }
+
+  async aggregateSize(query: Query<FileSystemRecord>): Promise<number> {
+    return query
+      .filter({ type: "file" })
+      .withSum("contentSize", "contentSizeTotal")
+      .findOne()
+      .then((r) => r.contentSizeTotal ?? 0); // may be null (bug?)
+  }
 }

@@ -17,6 +17,7 @@ import {
   RestCrudKernel,
   RestSerializationCustomizations,
 } from "@deepkit-rest/rest-crud";
+import { getContentLength } from "src/common/http";
 import { HttpRangeParser } from "src/core/http-range-parser.service";
 import { RequestContext } from "src/core/request-context";
 import { AppEntitySerializer, AppResource } from "src/core/rest";
@@ -98,6 +99,7 @@ export class FileSystemRecordResource
   }
 
   @rest.action("PUT", ":pk/content")
+  @http.group("quota-checking")
   async upload(request: HttpRequest): Promise<NoContentResponse> {
     const record = await this.crudContext.getEntity();
     if (record.type !== "file") throw new HttpBadRequestError();
@@ -141,7 +143,7 @@ export class FileSystemRecordResource
   }
 
   @rest.action("PUT", ":pk/content/chunks/:index")
-  @http.group("file-only")
+  @http.group("file-only", "quota-checking")
   async uploadChunk(
     request: HttpRequest,
     index: (integer & Minimum<1>) | "last",
@@ -219,10 +221,4 @@ export class FileSystemRecordSerializer extends AppEntitySerializer<FileSystemRe
         throw new HttpBadRequestError("Invalid parent");
     }
   }
-}
-
-function getContentLength(request: HttpRequest): number {
-  const result = request.headers["content-length"];
-  if (!result) throw new Error("Content-Length header is missing");
-  return +result;
 }

@@ -332,20 +332,6 @@ describe("File", () => {
       const stream = MemoryFileEngine.storage.get(recordNew.contentKey!);
       expect(stream?.toString()).toEqual("v");
     });
-
-    it("should return 400 when record type is not file", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "dir",
-        type: "directory",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.PUT(`/files/${record.id}/content`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(400);
-    });
   });
 
   describe("GET /files/:id/content", () => {
@@ -395,34 +381,6 @@ describe("File", () => {
       expect(response.headers).toEqual({ ["Content-Range"]: "bytes 0-1/3" });
       expect(response.body.toString()).toBe("vv");
     });
-
-    it("should return 404 when content not uploaded", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "test.txt",
-        type: "file",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.GET(`/files/${record.id}/content`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(404);
-    });
-
-    it("should return 400 when record type is not file", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "dir",
-        type: "directory",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.GET(`/files/${record.id}/content`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(400);
-    });
   });
 
   describe("GET /files/:id/content/chunks", () => {
@@ -441,20 +399,6 @@ describe("File", () => {
       );
       expect(response.statusCode).toBe(200);
       expect(response.json).toEqual([10]);
-    });
-
-    test("record type validation", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "dir",
-        type: "directory",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.GET(`/files/${record.id}/content/chunks`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(400);
     });
   });
 
@@ -479,21 +423,6 @@ describe("File", () => {
       expect(stream.read().toString()).toEqual("v");
       const recordNew = await database.query(FileSystemRecord).findOne();
       expect(recordNew.isContentDefined()).toBe(false);
-    });
-
-    test("record type validation", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "dir",
-        type: "directory",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.PUT(`/files/${record.id}/content/chunks/10`)
-          .body(Buffer.from("v"))
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(400);
     });
 
     test("workflow", async () => {
@@ -545,20 +474,6 @@ describe("File", () => {
       expect(response.bodyString).toBe("");
       expect(manager.inspect(record.id)).toEqual([]);
     });
-
-    test("record type validation", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "dir",
-        type: "directory",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.DELETE(`/files/${record.id}/content/chunks`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(400);
-    });
   });
 
   describe("GET /files/:id/integrity", () => {
@@ -582,20 +497,6 @@ describe("File", () => {
           .header("authorization", auth),
       );
       expect(response.statusCode).toBe(204);
-    });
-
-    it("should return 404 if content is not uploaded", async () => {
-      const record = new FileSystemRecord({
-        owner: user,
-        name: "test.txt",
-        type: "file",
-      });
-      await database.persist(record);
-      const response = await requester.request(
-        HttpRequest.GET(`/files/${record.id}/integrity`) //
-          .header("authorization", auth),
-      );
-      expect(response.statusCode).toBe(404);
     });
 
     it("should return 404 if content is broken", async () => {
